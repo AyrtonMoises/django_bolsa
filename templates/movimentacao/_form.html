@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-md-8 text-left">
+        <div class="form-group">
+
+            {% for field in form %}
+            <p>{{ field.label_tag }} {{ field }} </p>
+            {% if form.errors %}
+            {% for error in field.errors %}
+            <p class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </p>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+
+        </div>
+    </div>
+

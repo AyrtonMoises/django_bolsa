@@ -1,0 +1,51 @@
+{% load template_tags %}
+
+<div class="col-xl-4">
+    <div class="card">
+        <div class="card-header border-0">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="mb-0">Alocação de ações</h3>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <!-- Projects table -->
+            <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Ação</th>
+                        <th scope="col">R$ Valor total</th>
+                        <th scope="col">%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in carteira_alocacao %}  
+                    <tr>
+                        <th scope="row">
+                            {{ item.acao }}
+                        </th>
+                        <td>
+                            {{ item.acao.preco|multiplicar:item.quantidade }}
+                        </td>
+                        <td>{% with percentual=item.acao.preco|multiplicar:item.quantidade|percentual:totais.total_atual %}    
+                            <div class="d-flex align-items-center">
+                                <span class="mr-2">{{ percentual|floatformat:2 }}%</span>
+                                <div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-gradient-{% cycle 'info' 'danger' 'success' %}" role="progressbar"
+                                            aria-valuenow="{{ percentual|floatformat:0 }}" aria-valuemin="0" aria-valuemax="100"
+                                            style="width: {{ percentual|floatformat:0 }}%;"></div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            {% endwith %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

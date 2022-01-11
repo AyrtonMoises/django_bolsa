@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+    <meta name="author" content="Creative Tim">
+
+    <title>Django Bolsa</title>
+    <!-- Favicon -->
+    <link rel="icon" href="{% static '/assets/img/brand/favicon.png' %}" type="image/png">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <!-- Icons -->
+    <link rel="stylesheet" href="{% static 'vendor/nucleo/css/nucleo.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'vendor/@fortawesome/fontawesome-free/css/all.min.css' %}" type="text/css">
+    <!-- Argon CSS -->
+    <link rel="stylesheet" href="{% static 'css/argon.css' %}" type="text/css">
+</head>
+
+<body class="bg-default">
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header bg-gradient-primary py-6 py-lg-8 pt-lg-9">
+            <div class="container">
+                <div class="header-body text-center mb-7">
+                  <div class="row justify-content-center">
+                    <div class="col-xl-5 col-lg-6 col-md-8 px-5">
+                      <h1 class="text-white">Django Bolsa</h1>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="separator separator-bottom separator-skew zindex-100">
+                <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+                </svg>
+            </div>
+        </div>
+        <!-- Page content -->
+        <div class="container mt--9 pb-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-7">
+                    <div class="card bg-secondary border-0 mb-0">
+                        <div class="card-body px-lg-5 py-lg-5">
+                            <div class="text-center text-muted mb-4">
+                                Entre com seus dados
+                            </div>
+                            {% include 'partials/_alertas.html' %}
+                            <form id="login" action="{% url 'login' %}" method="POST" >
+                                {% csrf_token %}
+                                <div class="form-group mb-3">
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                        </div>
+                                        <input class="form-control" placeholder="Email" name="email" type="email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                        </div>
+                                        <input class="form-control" name="password" placeholder="Senha" type="password">
+                                    </div>
+                                </div>
+                                <div class="custom-control custom-control-alternative custom-checkbox">
+                                    <input class="custom-control-input" id="remember" type="checkbox">
+                                    <label class="custom-control-label" for="remember">
+                                        <span class="text-muted">Lembrar-me</span>
+                                    </label>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary my-4">Entrar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="py-5" id="footer-main">
+        <div class="container">
+            <div class="text-center text-muted">
+                &copy; {% now 'Y' %} <a href="#" class="font-weight-bold ml-1" target="_blank">Django Bolsa</a>
+            </div>
+        </div>
+    </footer>
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/js-cookie/js.cookie.js' %}"></script>
+    <script src="{% static 'vendor/jquery.scrollbar/jquery.scrollbar.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js' %}"></script>
+    <!-- Argon JS -->
+    <script src="{% static 'js/argon.js' %}"></script>
+
+    <script>
+
+        window.onload = () => {
+            document.getElementsByName("email")[0].value = localStorage.getItem("email");
+            document.getElementById("remember").checked = localStorage.getItem("remember");
+        };
+
+        document.getElementById("login").onsubmit = () => {
+
+            if (document.getElementById("remember").checked) {
+                localStorage.setItem('email', document.getElementsByName("email")[0].value);
+                localStorage.setItem('remember', document.getElementById("remember").checked);
+            } else {
+                localStorage.removeItem('email');
+                localStorage.removeItem('remember');
+            }
+
+        };
+
+    </script>
+</body>
+
+</html>
