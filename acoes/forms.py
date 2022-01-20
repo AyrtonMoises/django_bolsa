@@ -102,6 +102,8 @@ class AcaoForm(forms.ModelForm):
     def clean_ticker(self):
         """ Deixa ticker em letras maiúsculas """
         ticker = self.cleaned_data.get('ticker')
+        if not len(ticker) == 5:
+            raise forms.ValidationError("Ticker deve ter tamanho de 5 caracteres")
         ticker = ticker.upper()
         return ticker
 
