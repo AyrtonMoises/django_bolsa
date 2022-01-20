@@ -8,7 +8,7 @@
                     <h3 class="mb-0">Carteira</h3>
                 </div>
                 <div class="col text-right">
-                    <a href="#!" class="btn btn-sm btn-primary">Suas movimentações</a>
+                    {% include 'movimentacao/_modal-lista.html' %}
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
                     <tr>
                         <th scope="col">Ação</th>
                         <th scope="col">R$ Preço médio</th>
-                        <th scope="col">R$ Preço atual</th>
+                        <th scope="col" data-toggle="tooltip" data-placement="top" title="Dia anterior">R$ Preço atual</th>
                         <th scope="col">Quantidade</th>
                         <th scope="col">R$ Valor investido</th>
                         <th scope="col">R$ Ganho/Perda</th>
@@ -28,7 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                   
+                    {% if carteira %}
                     {% for item in carteira %}
                         <tr>
                             <th scope="row">
@@ -60,6 +60,7 @@
                             </td>
                         </tr>
                     {% endfor %}
+                    {% endif %}
                     
                 </tbody>
             </table>

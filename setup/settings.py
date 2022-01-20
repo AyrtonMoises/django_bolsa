@@ -2,6 +2,7 @@ from pathlib import Path
 
 import environ
 
+
 environ.Env.read_env()
 
 env = environ.Env(
@@ -33,6 +34,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'acoes',
     'contas',
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -43,6 +46,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'setup.urls'
@@ -73,10 +77,7 @@ WSGI_APPLICATION = 'setup.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': env.db()
 }
 
 
@@ -122,6 +123,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -130,6 +132,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'contas.User'
 
 LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'dashboard'
 
 # Messages 
 from django.contrib.messages import constants as messages
@@ -140,3 +143,13 @@ MESSAGE_TAGS = {
 
 THOUSAND_SEPARATOR=',',
 USE_THOUSAND_SEPARATOR=True
+
+PATH_DRIVER_FIREFOX = env('PATH_DRIVER_FIREFOX')
+PATH_BINARY_FIREFOX = env('PATH_BINARY_FIREFOX')
+
+CELERY_BROKER_URL = env('CLOUDAMQP_URL')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'America/Sao_Paulo'
+CELERY_RESULT_BACKEND = 'django-db'

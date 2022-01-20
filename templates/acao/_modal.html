@@ -1,0 +1,25 @@
+<!-- Button trigger modal -->
+<a href="#" class="btn btn-sm btn-neutral" onclick="chamaFormAcaoModal()" data-toggle="modal" data-target="#acaoModal">+ Ação</a>
+
+<!-- Modal -->
+<div class="modal fade" id="acaoModal" tabindex="-1" role="dialog" aria-labelledby="acaoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="acaoModalLabel">Ação</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="id_form_acao">
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" onclick="submitAcaoModal()" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

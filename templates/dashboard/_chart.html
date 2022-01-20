@@ -1,0 +1,115 @@
+<div class="col-xl-12">
+    <div class="card bg-default">
+        <div class="card-header bg-transparent">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h6 class="text-light text-uppercase ls-1 mb-1">Performance vendas</h6>
+                    <h5 class="h3 text-white mb-0">Mensal</h5>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div>
+                <canvas id="myChart" height="50"></canvas>
+              </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+$(document).ready(function() {
+
+    $.ajax({
+        url: "{% url 'lucro_prejuizo_mes_chart' %}",
+        success: function (retorno) {
+        objRetorno = Object.entries(retorno.data);
+
+        var lucroMesArray = [];
+        objRetorno.forEach(([key, value]) => {
+            lucroMesArray.push(value['lucro']);
+        });
+
+        var prejuizoMesArray = [];
+        objRetorno.forEach(([key, value]) => {
+            prejuizoMesArray.push(value['prejuizo']); 
+        });
+
+
+        const labels = [
+            'Janeiro',
+            'Fevereiro',
+            'Março',
+            'Abril',
+            'Maio',
+            'Junho',
+            'Julho',
+            'Agosto',
+            'Setembro',
+            'Outubro',
+            'Novembro',
+            'Dezembro',
+        ];
+
+        const data = {
+            labels: labels,
+            datasets: [
+            {
+            label: 'Lucro',
+            backgroundColor: '#2dce89',
+            borderColor: '#2dce89',
+            data: lucroMesArray,
+            },
+            {
+            label: 'Prejuízo',
+            backgroundColor: '#f5365c',
+            borderColor: '#f5365c',
+            data: prejuizoMesArray,
+            }
+            ]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Prejuízo x Lucro',
+                        color: 'white'
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: 'white',
+                        },
+                    },
+                    y: {
+                        ticks: {
+                            color: 'white',
+                        },
+                    }
+                }
+            }
+
+        };
+
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+    }
+
+    });
+
+});
+
+</script>

@@ -2,7 +2,6 @@
 
 {% block header %}
 {% include 'dashboard/_header.html' %}
-
 {% endblock %}
 
 {% block content %}
@@ -12,42 +11,13 @@
     {% include 'dashboard/_alocacao.html' %}
 </div>
 <div class="row">
-
-    <div class="col-xl-12">
-        <div class="card bg-default">
-          <div class="card-header bg-transparent">
-            <div class="row align-items-center">
-              <div class="col">
-                <h6 class="text-light text-uppercase ls-1 mb-1">Performance</h6>
-                <h5 class="h3 text-white mb-0">Vendas</h5>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <!-- Chart -->
-            <div class="chart">
-                <div class="chartjs-size-monitor">
-                    <div class="chartjs-size-monitor-expand">
-                        <div class=""></div>
-                    </div>
-                    <div class="chartjs-size-monitor-shrink">
-                        <div class=""></div>
-                    </div>
-                </div>
-                <!-- Chart wrapper -->
-                <canvas id="chart-sales-dark" class="chart-canvas chartjs-render-monitor" width="792" height="350"
-                    style="display: block; width: 792px; height: 350px;"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    {% include 'dashboard/_chart.html' %}
 </div>
 {% endblock %}
 
 {% block js %}
 <script>
-    function chamaFormModal() {
+    function chamaFormMovimentacaoModal() {
         url = "{% url 'cria_movimentacao' %}";
         $.ajax({
             url: url,
@@ -61,7 +31,8 @@
         });
     }
 
-    function submitModal() {
+    function submitMovimentacaoModal() {
+
         url = "{% url 'cria_movimentacao' %}";
         $.ajax({
             url: url,
@@ -71,11 +42,58 @@
                 location.reload();
             },
             error: function (data) {
-                if(data.status == 400){
+                if (data.status == 400) {
                     $('#movimentacaoModal .modal-body').html(data.responseText);
-                }else{
-                    alert('Erro no sistema');
-                }          
+                } else {
+                    alert('Erro ao inserir');
+                }
+            }
+        });
+    }
+
+    function chamaModalMovimentacoes() {
+        url = "{% url 'movimentacoes' %}";
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                $('#movimentacoesModal .modal-body').html(data);
+            },
+            error: function (data) {
+                alert('Erro ao carregar dados');
+            }
+        });
+    }
+
+    function chamaFormAcaoModal() {
+        url = "{% url 'cria_acao' %}";
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                $('#acaoModal .modal-body').html(data);
+            },
+            error: function (data) {
+                alert('Erro ao carregar dados');
+            }
+        });
+    }
+
+    function submitAcaoModal() {
+        url = "{% url 'cria_acao' %}";
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: $("#id_form_acao").serialize(),
+            success: function (data) {
+                location.reload();
+            },
+            error: function (data) {
+                if (data.status == 400) {
+                    $('#acaoModal .modal-body').html(data.responseText);
+                } else {
+                    alert('Erro ao inserir');
+                }
             }
         });
     }
